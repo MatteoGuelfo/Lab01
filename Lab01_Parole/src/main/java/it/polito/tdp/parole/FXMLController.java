@@ -12,8 +12,9 @@ import javafx.scene.control.TextField;
 
 public class FXMLController {
 	
-	Parole elenco ;
-
+	Parole elenco;
+	
+	
     @FXML
     private ResourceBundle resources;
 
@@ -22,6 +23,9 @@ public class FXMLController {
 
     @FXML
     private TextField txtParola;
+    
+    @FXML
+    private Button btnCancella;
 
     @FXML
     private Button btnInserisci;
@@ -31,15 +35,40 @@ public class FXMLController {
 
     @FXML
     private Button btnReset;
+    
+    @FXML
+    private TextArea txtTempi;
 
+
+
+    
+    
     @FXML
     void doInsert(ActionEvent event) {
-    	// TODO
+    	
+    	elenco.addParola(txtParola.getText());
+    	Parole pa= new Parole(elenco.getElenco());
+    	txtResult.clear();
+    	txtResult.setText(pa.toString());
+    	txtParola.clear();
+    	setTempi();
+    	
+    	
+    	
+    }  
+    
+    @FXML
+    void onDelate(ActionEvent event) {
+    	elenco.cancellaParola(txtParola.getText());
+    	Parole pa= new Parole(elenco.getElenco());
+    	txtResult.setText(pa.toString());
+    	setTempi();
     }
 
     @FXML
     void doReset(ActionEvent event) {
-    	// TODO
+    	txtResult.clear();
+    	setTempi();
     }
 
     @FXML
@@ -50,5 +79,9 @@ public class FXMLController {
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Scene.fxml'.";
 
         elenco = new Parole() ;
+    }
+    
+    void setTempi() {
+    	txtTempi.setText(Long.toString(System.nanoTime()));
     }
 }
